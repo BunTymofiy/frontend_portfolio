@@ -8,7 +8,5 @@ module.exports = {
     ],
   },
   env: {
-    CONTENTFUL_SPACE_ID:"wrgal70wrjk1",
-    CONTENTFUL_ACCESS_KEY:"zO8-UGBNTjBjItw2wWBOWaVbRIU_o5MD_aqarLohuag"
   }
 }
