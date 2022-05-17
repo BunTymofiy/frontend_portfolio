@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout'
 import Experience from '../components/Experience'
 import { createClient } from 'contentful'
 
 export default function experience({ experience }) {
+  const [experienceData, setExperienceData] = useState([])
+  function filter_data(data) {
+    const today = new Date()
+    if (data[0].fields.yearEnd === today.getFullYear()) {
+      data[0].fields.yearEnd = 'Now'
+    }
+  }
+  useEffect(() => {
+    setExperienceData(filter_data(experience))
+  }, [])
+
   return (
     <Layout title="Experience - Tymofiy Bun">
       <Experience experience={experience} />

@@ -1,116 +1,178 @@
-import React from "react";
-import userData from "../constants/data";
+import React from 'react'
+import userData from '../constants/data'
+import ProgressBar from './ProgressBar'
 
-export default function AboutMe() {
+export default function AboutMe({
+  cv,
+  about,
+  programmingSkills,
+  frameworksAndLibraries,
+  databases,
+}) {
+  const cvUrl = 'https:' + cv[cv.length - 1].fields.cv.fields.file.url
+  const aboutData = about[0].fields
+
+  const programmingSkillsBars = () => {
+    programmingSkills.reverse()
+    let bars = []
+
+    for (let i = 0; i < programmingSkills.length; i++) {
+      let y = i + 1
+      bars.push(
+        <ProgressBar
+          name={programmingSkills[i].fields.language}
+          percentage={programmingSkills[i].fields.knowledgePercentage}
+          logo={
+            'https:' + programmingSkills[i].fields.languageImg.fields.file.url
+          }
+        />
+      )
+    }
+    return bars
+  }
+  const frameworksAndLibrariesBars = () => {
+    let bars = []
+
+    for (let i = 0; i < frameworksAndLibraries.length; i++) {
+      let y = i + 1
+      bars.push(
+        <ProgressBar
+          name={frameworksAndLibraries[i].fields.name}
+          percentage={frameworksAndLibraries[i].fields.knowledgePercentage}
+          logo={
+            'https:' + frameworksAndLibraries[i].fields.logo.fields.file.url
+          }
+        />
+      )
+    }
+    return bars
+  }
+  const databasesBars = () => {
+    let bars = []
+
+    for (let i = 0; i < databases.length; i++) {
+      let y = i + 1
+      bars.push(
+        <ProgressBar
+          name={databases[i].fields.name}
+          percentage={databases[i].fields.knowledgePercentage}
+          logo={
+            'https:' + databases[i].fields.logo.fields.file.url
+          }
+        />
+      )
+    }
+    return bars
+  }
+
   return (
     <section className="bg-white dark:bg-gray-800">
-      <div className="max-w-6xl mx-auto h-48 bg-white dark:bg-gray-800">
-        <h1 className=" text-5xl md:text-9xl font-bold py-20 text-center md:text-left">
+      <div className="mx-auto h-48 max-w-6xl bg-white dark:bg-gray-800">
+        <h1 className=" py-20 text-center text-5xl font-bold md:text-left md:text-9xl">
           About Me.
         </h1>
       </div>
-      <div className="bg-[#F1F1F1] -mt-10 dark:bg-gray-900">
-        <div className="text-container max-w-6xl mx-auto pt-20">
+      <div className="-mt-10 bg-[#F1F1F1] dark:bg-gray-900">
+        <div className="text-container mx-auto max-w-6xl pt-20">
           <p
-            className="leading-loose text-2xl md:text-4xl font-semibold  mx-4"
-            style={{ lineHeight: "3rem" }}
+            className="mx-4 text-2xl font-semibold leading-loose  md:text-4xl"
+            style={{ lineHeight: '3rem' }}
           >
-            {/* {userData.about.title}. Currently working on{" "}
+            {aboutData.about}. Currently working on{' '}
             <a
-              className="bg-red-500 rounded-md px-2 py-1 text-white"
-              href={userData.about.currentProjectUrl}
+              className="rounded-md bg-red-500 px-2 py-1 text-white hover:scale-105"
+              href={aboutData.currentProjectLink}
             >
-              {userData.about.currentProject} ✈️
-            </a> */}
+              {aboutData.currentProject}
+            </a>
           </p>
         </div>
       </div>
-      <div className="bg-[#F1F1F1] dark:bg-gray-900 px-4">
-        <div className="pt-20 grid grid-cols-1 md:grid-cols-3 max-w-6xl mx-auto gap-y-20 gap-x-20">
+      <div className="bg-[#F1F1F1] px-4 dark:bg-gray-900">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-y-20 gap-x-20 pt-20 md:grid-cols-3">
           {/* Social Buttons */}
           <div className="inline-flex flex-col">
             <div>
               <h1 className="text-xl font-semibold text-gray-700 dark:text-gray-200">
                 Contact
               </h1>
-              <p className="text-lg text-gray-500 mt-4 dark:text-gray-300">
-                For any sort help / enquiry, shoot a{" "}
+              <p className="mt-4 text-lg text-gray-500 dark:text-gray-300">
+                If you have any sort of questions write me a{' '}
                 <a
                   href={`mailto:${userData.email}`}
-                  className="text-gray-800 border-b-2 border-gray-800 dark:border-gray-300 font-bold dark:text-gray-300"
+                  className="border-b-2 border-gray-800 font-bold text-gray-800 dark:border-gray-300 dark:text-gray-300"
                 >
                   mail
-                </a>{" "}
-                and I'll get back. I swear.
+                </a>{' '}
+                and I'll get back to you as soon as possible.
               </p>
             </div>
             <div className="mt-8">
               <h1 className="text-xl font-semibold text-gray-700 dark:text-gray-200">
                 Job Opportunities
               </h1>
-              <p className="text-lg text-gray-500 mt-4 dark:text-gray-300">
-                I'm looking for a job currently, If you see me as a good fit,
-                check my{" "}
+              <p className="mt-4 text-lg text-gray-500 dark:text-gray-300">
+                If you are interested to work with me, you can check my{' '}
                 <a
-                  href={userData.resumeUrl}
+                  href={cvUrl}
                   target="__blank"
-                  className="text-gray-800 border-b-2 border-gray-800 dark:border-gray-300 font-bold dark:text-gray-300"
+                  className="border-b-2 border-gray-800 font-bold text-gray-800 dark:border-gray-300 dark:text-gray-300"
                 >
                   CV
-                </a>{" "}
-                and I'd love to work for you.
+                </a>
+                .
               </p>
             </div>
             {/* Social Links */}
-            <h1 className="text-xl font-semibold text-gray-700 mt-8 dark:text-gray-200">
+            <h1 className="mt-8 text-xl font-semibold text-gray-700 dark:text-gray-200">
               Social Links
             </h1>
             <div className="mt-4 ml-4">
-              <div className="flex flex-row justify-start items-center ">
+              <div className="flex flex-row items-center justify-start ">
                 <a
                   href={userData.socialLinks.facebook}
-                  className="flex flex-row items-center space-x-4 group"
+                  className="group flex flex-row items-center space-x-4"
                 >
                   <div className="my-4">&rarr;</div>
-                  <p className="text-lg text-gray-500 font-mono relative overflow-hidden dark:text-gray-300">
-                    <div className="absolute h-0.5 w-full bg-gray-400 bottom-0 transform -translate-x-24 group-hover:translate-x-0 transition duration-300"></div>
+                  <p className="relative overflow-hidden font-mono text-lg text-gray-500 dark:text-gray-300">
+                    <div className="absolute bottom-0 h-0.5 w-full -translate-x-24 transform bg-gray-400 transition duration-300 group-hover:translate-x-0"></div>
                     Facebook
                   </p>
                 </a>
               </div>
-              
-              <div className="flex flex-row justify-start items-center">
+
+              <div className="flex flex-row items-center justify-start">
                 <a
                   href={userData.socialLinks.github}
-                  className="flex flex-row items-center space-x-4 group"
+                  className="group flex flex-row items-center space-x-4"
                 >
                   <div className="my-4">&rarr;</div>
-                  <p className="text-lg text-gray-500 font-mono relative overflow-hidden dark:text-gray-300">
-                    <div className="absolute h-0.5 w-full bg-gray-400 bottom-0 transform -translate-x-24 group-hover:translate-x-0 transition duration-300"></div>
+                  <p className="relative overflow-hidden font-mono text-lg text-gray-500 dark:text-gray-300">
+                    <div className="absolute bottom-0 h-0.5 w-full -translate-x-24 transform bg-gray-400 transition duration-300 group-hover:translate-x-0"></div>
                     GitHub
                   </p>
                 </a>
               </div>
-              <div className="flex flex-row justify-start items-center">
+              <div className="flex flex-row items-center justify-start">
                 <a
                   href={userData.socialLinks.linkedin}
-                  className="flex flex-row items-center space-x-4 group"
+                  className="group flex flex-row items-center space-x-4"
                 >
                   <div className="my-4">&rarr;</div>
-                  <p className="text-lg text-gray-500 font-mono relative overflow-hidden dark:text-gray-300">
-                    <div className="absolute h-0.5 w-full bg-gray-400 bottom-0 transform -translate-x-24 group-hover:translate-x-0 transition duration-300"></div>
+                  <p className="relative overflow-hidden font-mono text-lg text-gray-500 dark:text-gray-300">
+                    <div className="absolute bottom-0 h-0.5 w-full -translate-x-24 transform bg-gray-400 transition duration-300 group-hover:translate-x-0"></div>
                     LinkedIn
                   </p>
                 </a>
               </div>
-              <div className="flex flex-row justify-start items-center">
+              <div className="flex flex-row items-center justify-start">
                 <a
                   href={userData.socialLinks.instagram}
-                  className="flex flex-row items-center space-x-4 group"
+                  className="group flex flex-row items-center space-x-4"
                 >
                   <div className="my-4">&rarr;</div>
-                  <p className="text-lg text-gray-500 font-mono relative overflow-hidden dark:text-gray-300">
-                    <div className="absolute h-0.5 w-full bg-gray-400 bottom-0 transform -translate-x-28 group-hover:translate-x-0 transition duration-300"></div>
+                  <p className="relative overflow-hidden font-mono text-lg text-gray-500 dark:text-gray-300">
+                    <div className="absolute bottom-0 h-0.5 w-full -translate-x-28 transform bg-gray-400 transition duration-300 group-hover:translate-x-0"></div>
                     Instagram
                   </p>
                 </a>
@@ -122,68 +184,47 @@ export default function AboutMe() {
             {userData.about.description?.map((desc, idx) => (
               <p
                 key={idx}
-                className="text-xl text-gray-700 mb-4 dark:text-gray-300 "
+                className="mb-4 text-xl text-gray-700 dark:text-gray-300 "
               >
                 {desc}
               </p>
             ))}
 
-            {/* <h1 className="bg-red-500 text-3xl rounded-md px-2 py-1 inline-block font-bold text-gray-50">
-              Tech Stack
-            </h1>
-            <div className="flex flex-row flex-wrap mt-8">
-              <img
-                src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png"
-                className="h-20 w-20 mx-4 my-4"
-              />
-              <img
-                src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/java/java.png"
-                className="h-20 w-20 mx-4 my-4"
-              />
-              <img
-                src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png"
-                className="h-20 w-20 mx-4 my-4"
-              />
-              <img
-                src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/html/html.png"
-                className="h-20 w-20 mx-4 my-4"
-              />
-              <img
-                src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/css/css.png"
-                className="h-20 w-20 mx-4 my-4"
-              />
-              <img
-                src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/angular/angular.png"
-                className="h-20 w-20 mx-4 my-4"
-              />
-              <img
-                src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/vue/vue.png"
-                className="h-20 w-20 mx-4 my-4"
-              />
-              <img
-                src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/git/git.png"
-                className="h-20 w-20 mx-4 my-4"
-              />
-              <img
-                src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png"
-                className="h-20 w-20 mx-4 my-4"
-              />
-              <img
-                src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/firebase/firebase.png"
-                className="h-20 w-20 mx-4 my-4"
-              />
-              <img
-                src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/mysql/mysql.png"
-                className="h-20 w-20 mx-4 my-4"
-              />
-              <img
-                src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/mongodb/mongodb.png"
-                className="h-20 w-20 mx-4 my-4"
-              />
-            </div> */}
+            {programmingSkills.length !== 0 && (
+              <div>
+                <h1 className="inline-block rounded-md bg-red-500 px-2 py-1 text-3xl font-bold text-gray-50">
+                  Programming Languages
+                </h1>
+                <div className="mt-8 flex flex-wrap space-x-5">
+                  <div className="grid grid-cols-2">
+                    {programmingSkillsBars()}
+                  </div>
+                </div>
+              </div>
+            )}
+            {frameworksAndLibraries.length !== 0 && (
+              <div className='ml-1'>
+                <h1 className="mt-10 inline-block rounded-md bg-red-500 px-2 py-1 text-3xl font-bold text-gray-50">
+                  Frameworks and Libraries
+                </h1>
+                <div className="mt-8 flex flex-wrap space-x-5">
+                  <div className="grid grid-cols-2">{frameworksAndLibrariesBars()}</div>
+                </div>
+              </div>
+            )}
+            {databases.length !== 0 && (
+              <div className='ml-1'>
+                <h1 className="mt-10 inline-block rounded-md bg-red-500 px-2 py-1 text-3xl font-bold text-gray-50">
+                  Databases
+                </h1>
+                <div className="mt-8 flex flex-wrap space-x-5">
+                  <div className="grid grid-cols-2">{databasesBars()}</div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }

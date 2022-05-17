@@ -5,7 +5,6 @@ import { createClient } from 'contentful'
 
 
 export default function projects({projects}) {
-  console.log(projects);
   return (
     <Layout title="Projects - Tymofiy Bun">
       <Projects projects={projects}/>

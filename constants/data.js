@@ -4,7 +4,7 @@ const userData = {
   designation: "Full-Stack Developer",
   avatarUrl: "/Avatar.jpg",
   email: "tima.boon@gmail.com",
-  phone: "",
+  phone: "514-569-8303",
   address: "Longueuil, QC, Canada",
   projects: [
     
